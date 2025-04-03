@@ -14,11 +14,11 @@ class Timer():
         logger (Logger): The custom logger used for logging messages. Defaults to None.
     """
 
-    def __init__(self, name="EasyTimer", logger:logging.Logger=None, disable_print:bool=False, print_digits:int=2) -> None:
+    def __init__(self, name="AsdfTimer", logger:logging.Logger=None, disable_print:bool=False, print_digits:int=2) -> None:
         """Initialize the Timer instance.
 
         Args:
-            name (str, optional): The name of the timer. Defaults to "EasyTimer".
+            name (str, optional): The name of the timer. Defaults to "AsdfTimer".
             logger (Logger, optional): A logger instance for logging. Uses print() if None.
             disable_print (bool, optional): Whether to disable logging/printing the elapsed time. Defaults to False.
             print_digits (int, optional): Number of decimal places to print for elapsed time. Defaults to 2.

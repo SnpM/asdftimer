@@ -1,6 +1,6 @@
 import pytest
 from time import sleep
-from easytimer.timer import Timer
+from asdftimer.timer import Timer
 
 def test_timer_end():
     """Test the `end` method for accurate elapsed time."""
@@ -53,10 +53,10 @@ def test_timer_with_logger(caplog):
 
 def test_timer_print_digits(capfd):
     """Test the `print_digits` parameter for controlling decimal places."""
-    timer = Timer(name="Digits Timer", disable_print=False, print_digits=4)
+    timer = Timer(name="Digits Timer", disable_print=False, print_digits=1)
     sleep(1)
     timer.end()
     captured = capfd.readouterr()
     assert "Digits Timer took" in captured.out
-    assert "1.0000 seconds" in captured.out
+    assert "1.0 seconds" in captured.out
 

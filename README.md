@@ -1,6 +1,6 @@
-# EasyTimer
+# Asdftimer
 
-EasyTimer is a simple Python utility class for measuring elapsed time. It provides an easy-to-use interface for timing code execution, with support for logging and context management.
+`asdftimer` is a simple Python utility class for measuring elapsed time. It provides an easy-to-use interface for timing code execution, with support for logging and context management.
 
 ## Features
 
@@ -12,7 +12,7 @@ EasyTimer is a simple Python utility class for measuring elapsed time. It provid
 ## Installation
 
 ```bash
-pip install easytimer
+pip install asdftimer
 ```
 
 ## Usage
@@ -20,19 +20,19 @@ pip install easytimer
 ### Basic Usage
 
 ```python
-from easytimer import Timer
+from asdftimer import Timer
 from time import sleep
 
 timer = Timer()
 time.sleep (2.4)
 elapsed_time = timer.end()
-# Output: EasyTimer took 2.40 seconds
+# Output: AsdfTimer took 2.40 seconds
 ```
 
 ### Using a Custom Logger
 
 ```python
-from easytimer.timer import Timer
+from asdftimer.timer import Timer
 import logging
 logger = logging.getLogger(__name__)
 
@@ -45,7 +45,7 @@ timer.end()
 ### Timing a context
 
 ```python
-from easytimer.timer import Timer
+from asdftimer.timer import Timer
 with Timer(name="ContextTimer") as timer:
     pass # ur code here
 # Output: ContextTimer took X seconds
@@ -55,8 +55,8 @@ with Timer(name="ContextTimer") as timer:
 
 ### `Timer`
 
-#### `__init__(name="EasyTimer", logger=None, disable_print=False, print_digits=2)`
-- `name` (str): The name of the timer. Defaults to `"EasyTimer"`.
+#### `__init__(name="AsdfTimer", logger=None, disable_print=False, print_digits=2)`
+- `name` (str): The name of the timer. Defaults to `"AsdfTimer"`.
 - `logger` (Logger): A logger instance for logging. Uses `print()` if `None`.
 - `disable_print` (bool): Whether to disable logging/printing the elapsed time. Defaults to `False`.
 - `print_digits` (int): Number of decimal places to print for elapsed time. Defaults to `2`.
@@ -79,7 +79,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ## Contributing
 
-Contributions are welcome! Feel free to open issues or submit pull requests to improve EasyTimer.
+Contributions are welcome! Feel free to open issues or submit pull requests to improve `asdftimer`.
 
 ## Author
 

@@ -1,11 +1,11 @@
 [tool.poetry]
-name = "easytimer"
+name = "asdftimer"
 version = "0.1.0"
 description = "Simple customizable Python timer."
 readme = "README.md"
 license = "MIT"
 authors = ["Nibs"]
-homepage = "https://github.com/snpm/scraipe"
+homepage = "https://github.com/snpm/asdftimer"
 
 [tool.poetry.dependencies]
 python = ">=3.10"
