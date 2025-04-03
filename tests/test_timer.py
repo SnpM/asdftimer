@@ -51,3 +51,12 @@ def test_timer_with_logger(caplog):
         timer.end()
     assert "Logger Timer took" in caplog.text
 
+def test_timer_print_digits(capfd):
+    """Test the `print_digits` parameter for controlling decimal places."""
+    timer = Timer(name="Digits Timer", disable_print=False, print_digits=4)
+    sleep(1)
+    timer.end()
+    captured = capfd.readouterr()
+    assert "Digits Timer took" in captured.out
+    assert "1.0000 seconds" in captured.out
+
