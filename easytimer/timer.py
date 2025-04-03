@@ -14,19 +14,21 @@ class Timer():
         logger (Logger): The custom logger used for logging messages. Defaults to None.
     """
 
-    def __init__(self, name="EasyTimer", logger:logging.Logger=None, disable_print:bool=False):
+    def __init__(self, name="EasyTimer", logger:logging.Logger=None, disable_print:bool=False, print_digits:int=2) -> None:
         """Initialize the Timer instance.
 
         Args:
             name (str, optional): The name of the timer. Defaults to "EasyTimer".
             logger (Logger, optional): A logger instance for logging. Uses print() if None.
             disable_print (bool, optional): Whether to disable logging/printing the elapsed time. Defaults to False.
+            print_digits (int, optional): Number of decimal places to print for elapsed time. Defaults to 2.
         """
         self.start_time = time()
         self.name = name
         self.logger = logger
         assert isinstance(self.logger, (Logger, type(None))), "logger must be a logging.Logger instance or None"
         self.disable_print = disable_print
+        self.print_digits = print_digits
 
     def end(self) -> float:
         """Output the elapsed time.
@@ -35,8 +37,8 @@ class Timer():
             float: The elapsed time in seconds.
         """
         dif = time() - self.start_time
-        message = f'{self.name} took {dif} seconds'
         if not self.disable_print:
+            message = f'{self.name} took {dif:.{self.print_digits}f} seconds'
             if self.logger:
                 self.logger.info(message)  # Use logger if provided
             else:
