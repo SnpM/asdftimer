@@ -24,8 +24,8 @@ from asdftimer import Timer
 from time import sleep
 
 timer = Timer()
-time.sleep (2.4)
-elapsed_time = timer.end()
+sleep(2.4)
+elapsed_time = timer.stop()
 # Output: AsdfTimer took 2.40 seconds
 ```
 
@@ -38,8 +38,8 @@ logger = logging.getLogger(__name__)
 
 timer = Timer(name="LoggedTimer", logger=logger)
 # ur code here
-timer.end()
-# Output: LoggedTimer took X seconds'
+timer.stop()
+# Output: LoggedTimer took X seconds
 ```
 
 ### Timing a context
@@ -61,8 +61,8 @@ with Timer(name="ContextTimer") as timer:
 - `disable_print` (bool): Whether to disable logging/printing the elapsed time. Defaults to `False`.
 - `print_digits` (int): Number of decimal places to print for elapsed time. Defaults to `2`.
 
-#### `end() -> float`
-Outputs and returns the elapsed time in seconds.
+#### `stop() -> float`
+Pauses the timer and outputs/returns the elapsed time in seconds.
 
 #### `restart() -> None`
 Restarts the timer.
