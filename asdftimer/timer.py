@@ -59,6 +59,9 @@ class Timer():
         Returns:
             float: The elapsed time in seconds.
         """
+        if self._stop_time is not None:
+            warn(RuntimeWarning("Timer is already stopped. Doing nothing."))
+            return self.check()
         self._stop_time = time()
         return self.check()
     
