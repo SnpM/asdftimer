@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "asdftimer"
-version = "0.1.0"
+version = "0.1.2"
 description = "Simple customizable Python timer."
 readme = "README.md"
 license = "MIT"
@@ -12,3 +12,4 @@ python = ">=3.10"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "*"
+pytest-cov = "*"

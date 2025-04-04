@@ -1,1 +1,1 @@
-from asdftimer.timer import Timer
+from asdftimer.asdf_timer import AsdfTimer

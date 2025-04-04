@@ -4,18 +4,35 @@ import logging
 from logging import Logger
 from warnings import warn
 @final
-class Timer():
+class AsdfTimer():
     """A simple timer utility class to measure elapsed time.
-    This class provides methods to start, stop, resume, and restart a timer.
+    This class provides methods to check, stop, resume, and restart a timer.
     It can also be used as a context manager to automatically stop the timer
     when exiting the context.
     
     Attributes:
-        name (str): The name of the timer.
-        logger (Logger): A logger instance for logging. If None, uses print().
-        disable_print (bool): Whether to disable logging/printing the elapsed time.
+        name (str): Name of the timer. Used for logging and printing purposes.
+        logger (Logger): Logger instance for logging elapsed time. If None, uses print() instead.
+        disable_print (bool): Flag to disable logging when check() or stop() are called.
         print_digits (int): Number of decimal places to print for elapsed time.
+        elapsed (float): The elapsed time in seconds.
+        is_stopped (bool): Indicates whether the timer is currently stopped.
+        
+    Methods:
+        check() -> float: Output the elapsed time.
+        stop() -> float: Pause the timer and output the elapsed time.
+        resume() -> None: Unstop the timer.
+        restart() -> None: Restart the timer.
     """
+    
+    name: str
+    """Name of the timer. Used for logging and printing purposes."""
+    logger: Logger
+    """Logger instance for logging elapsed time. If None, uses print() instead."""
+    disable_print: bool
+    """Flag to disable logging when check() or stop() are called."""
+    print_digits: int
+    """Number of decimal places to print for elapsed time."""
 
     def __init__(self, name="AsdfTimer", logger:logging.Logger=None, disable_print:bool=False, print_digits:int=2) -> None:
         """Initialize the Timer instance.
@@ -33,28 +50,49 @@ class Timer():
         self.print_digits = print_digits
         
         # Start the timer
-        self.restart()
+        self._stop_time = None
+        self._elapsed_acc = 0
+        self._start_time = time()
+
         
-    def check(self) -> float:
-        """Output the elapsed time.
-        
+    @property
+    def is_stopped(self) -> bool:
+        """Check if the timer is currently stopped.
+
+        Returns:
+            bool: True if the timer is stopped, False otherwise.
+        """
+        return self._stop_time is not None
+    @property
+    def elapsed(self) -> float:
+        """Get the elapsed time.
+
         Returns:
             float: The elapsed time in seconds.
         """
         check_time = self._stop_time or time()
-        dif = check_time - self._start_time
+        elapsed_time = check_time - self._start_time
         # If the timer was stopped, add the accumulated elapsed time
-        dif += self._elapsed_acc
+        elapsed_time += self._elapsed_acc
+        return elapsed_time
+        
+    def check(self) -> float:
+        """Return and output the elapsed time.
+        
+        Returns:
+            float: The elapsed time in seconds.
+        """
+        elapsed_time = self.elapsed
         if not self.disable_print:
-            message = f'{self.name} took {dif:.{self.print_digits}f} seconds'
+            message = f'{self.name} took {elapsed_time:.{self.print_digits}f} seconds'
             if self.logger:
                 self.logger.info(message)
             else:
                 print(message)
-        return dif
+        return elapsed_time
 
     def stop(self) -> float:
-        """Pause the timer and output the elapsed time.
+        """Pause the timer and check the elapsed time.
 
         Returns:
             float: The elapsed time in seconds.
@@ -70,7 +108,7 @@ class Timer():
         if self._stop_time is None:
             warn(RuntimeWarning("Timer is already running. Doing nothing."))
             return
-        
+        # Accumulate the elapsed time and reset the start time
         self._elapsed_acc += self._stop_time - self._start_time
         self._stop_time = None
         self._start_time = time()
@@ -91,15 +129,18 @@ class Timer():
         """
         return self
     
-    def __exit__(self, exc_type, exc_value, traceback):
-        """Stop the timer when exiting the context. Output the elapsed time."""
-        self.stop()
-        
+    def __exit__(self, exc_type, exc_value, traceback) -> None:
+        """Stop the timer when exiting the context. Output the elapsed time.
+        Does not warn if the timer is already stopped."""
+        if not self.is_stopped:
+            self.stop()
+        else:
+            self.check()
     
     def __repr__(self) -> str:
         """String representation of the Timer instance."""
-        return f"Timer(name={self.name}, disable_print={self.disable_print}, print_digits={self.print_digits})"
+        return f"Timer(name={self.name}, disable_print={self.disable_print}, print_digits={self.print_digits}, elapsed={self.elapsed:.{self.print_digits}f}, is_stopped={self.is_stopped})"
     
     def __str__(self) -> str:
         """String representation of the Timer instance."""
-        return f"Timer: {self.name}, disable_print={self.disable_print}, print_digits={self.print_digits}"
+        return self.__repr__()
